@@ -1,0 +1,3 @@
+
+select department_id from evaluations
+where gender=true and `value`>5
