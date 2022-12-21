@@ -1,38 +1,24 @@
 <?php
 
-class SomeObject {
-    protected $name;
-
-    // Добавил тело в функцию __construct
-    public function __construct(string $name) {
-        $this->name = $name;
+# Добавил абстрактный класс XMLHTTPRequestService
+abstract class XMLHTTPRequestService {
+        public function request(string $url, string $method, array $options) { }
     }
 
-    //Вернул имя объекта в функции getObjectName
-    public function getObjectName() {
-        return $this->name;
+class XMLHttpService extends XMLHTTPRequestService {}
+
+class Http {
+    private $service;
+    
+    public function __construct(XMLHTTPRequestService $xmlHttpService) {
+         $this->service = $service;
     }
-}
-
-class SomeObjectsHandler {
-    public function __construct() { }
-
-    public function handleObjects(array $objects): array {
-        $handlers = [];
-        foreach ($objects as $object) {
-            // Убрал условия if, чтобы при добавлении других объектов не нужно было менять код класса
-            // Таким образом он стал закрытым для изменений
-            $handlers[] = 'handle_' . $object->getObjectName();
-        }
-
-        return $handlers;
+    
+    public function get(string $url, array $options) {
+         $this->service->request($url, 'GET', $options);
+    }
+    
+    public function post(string $url) {
+        $this->service->request($url, 'GET');
     }
 }
-
-$objects = [
-    new SomeObject('object_1'),
-    new SomeObject('object_2')
-];
-
-$soh = new SomeObjectsHandler();
-$soh->handleObjects($objects);
